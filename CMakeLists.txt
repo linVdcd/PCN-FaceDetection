@@ -1,0 +1,16 @@
+cmake_minimum_required(VERSION 2.8)
+project(pcn-facedetection)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/code")
+set(CAFFE_ROOT ~/tools/caffe)
+set(SOURCE_FILES code/picture.cpp code/PCN.cpp code/PCN.h)
+add_definitions(-DCPU_ONLY)
+find_package(OpenCV REQUIRED)
+#include_directories(code)
+include_directories(${CAFFE_ROOT}/include)
+include_directories(${CAFFE_ROOT}/build/src)
+
+link_directories(${CAFFE_ROOT}/build/lib)
+add_executable(pcn-facedetection ${SOURCE_FILES})
+target_link_libraries(pcn-facedetection -lcaffe -lglog -lboost_system -lprotobuf ${OpenCV_LIBS})
+
